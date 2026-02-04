@@ -1,3 +1,5 @@
+*Modified by PrunusSerrulata for personal use*
+
 [定制教程](https://xiabee.eu.org/customize.html) | [刷写教程](https://xiabee.eu.org/install.html)
 
 <div align=center>
@@ -55,15 +57,16 @@ echo 1 > /sys/class/gpio/modem_power/value
 
 ## 第三方软件包
 
-- [Bandix](https://github.com/timsaya/luci-app-bandix)
 - [luci-theme-aurora](https://github.com/eamonxg/luci-theme-aurora)
 - [luci-app-aurora-config](https://github.com/eamonxg/luci-app-aurora-config)
 - [EasyTier & luci-app-easytier](https://github.com/EasyTier/luci-app-easytier)
 - luci-app-ttyd
 - luci-app-upnp
+- etherwake & luci-app-wol
 - kmod-usb-net-cdc-ether
 - kmod-usb-net-rndis
 - kmod-mtd-rw
+- ...
 
 ---
 
