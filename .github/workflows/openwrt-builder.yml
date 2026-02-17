@@ -217,6 +217,7 @@ jobs:
               "256M") CONFIG="config/256m.config" ;;
               "128M") CONFIG="config/128m.config" ;;
               "128M-Ubootmod") CONFIG="config/128muboot.config" ;;
+              "N60-Pro") CONFIG="config/nx60pro-ipailna-high-power.config" ;;
             esac
             
             echo "Using Config: $CONFIG"
