@@ -18,6 +18,7 @@ on:
           - '128M'
           - '128M-Ubootmod'
           - 'all' 
+          - 'N60-Pro'
       repo:
         description: '指定源码仓库地址'
         required: true
@@ -86,6 +87,7 @@ jobs:
             "256M") echo "CONFIG_FILE=config/256m.config" >> $GITHUB_ENV ;;
             "128M") echo "CONFIG_FILE=config/128m.config" >> $GITHUB_ENV ;;
             "128M-Ubootmod") echo "CONFIG_FILE=config/128muboot.config" >> $GITHUB_ENV ;;
+            "N60-Pro") echo "CONFIG_FILE=config/nx60pro-ipailna-high-power.config" >> $GITHUB_ENV ;;
           esac
 
       - name: 👩‍💻 Copy previous config if exists
