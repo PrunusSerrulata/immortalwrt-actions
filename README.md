@@ -71,8 +71,8 @@ echo 1 > /sys/class/gpio/modem_power/value
 可以通过 ssh 连接到 Action 工作流来配置 `menuconfig` 。
 
 手动运行 `ImmortalWrt Builder`，选择单个设备（不能选 `all`），并勾选 SSH 选项。
-工作流会先通过 Ubuntu 软件源安装 tmate，避免 SSH action 内部下载静态二进制时长时间没有输出。
-在 `SSH connection to Menuconfig` 步骤的日志中找到 `SSH: ssh ...` 连接命令；连接后执行：
+工作流使用 Upterm 公共中继提供 SSH 会话，仅允许使用触发者 GitHub 账号上的 SSH 公钥连接。
+在 `SSH connection to Menuconfig` 步骤的日志中找到 SSH 连接命令；连接后执行：
 
 ```sh
 cd /workdir/openwrt
@@ -82,8 +82,8 @@ touch "$GITHUB_WORKSPACE/continue"
 ```
 
 SSH 步骤最多运行 15 分钟，请在超时前保存配置并创建 `continue` 文件；直接取消运行或超时会跳过配置推送。
-如果安装成功后仍不显示连接命令，可在 GitHub 的 Re-run jobs 中勾选 Enable debug logging，
-检查是否停在 `tmate wait tmate-ready`（连接 tmate 服务器阶段）。
+如果不显示连接命令，可在 GitHub 的 Re-run jobs 中勾选 Enable debug logging，
+检查 Upterm 启动日志及到 `uptermd.upterm.dev` 的连接情况。
 
 ---
 

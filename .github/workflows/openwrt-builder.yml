@@ -113,18 +113,12 @@ jobs:
           cd openwrt
           $GITHUB_WORKSPACE/$DIY_P2_SH
 
-      - name: 📦 Install tmate
-        timeout-minutes: 5
-        run: |
-          # Avoid the action's silent download of a static binary from GitHub Releases.
-          sudo apt-get install -y --no-install-recommends tmate openssh-client
-          tmate -V
-
       - name: ⌨️ SSH connection to Menuconfig
-        uses: mxschmitt/action-tmate@v3
+        uses: owenthereal/action-upterm@v1.15.0
         timeout-minutes: 15
         with:
-          install-dependencies: false
+          limit-access-to-actor: true
+          upterm-version: v0.29.0
           
       - name: 📤 Push config to main branch
         run: |
