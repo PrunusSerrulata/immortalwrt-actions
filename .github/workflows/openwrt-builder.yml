@@ -64,6 +64,8 @@ jobs:
     name: ⚙️ Menuconfig & Push
     if: github.event.inputs.ssh == 'true' && github.event.inputs.device != 'all'
     runs-on: ubuntu-22.04
+    outputs:
+      config_sha: ${{ steps.push_config.outputs.config_sha }}
     steps:
       - name: 🙌 Checkout
         uses: actions/checkout@v4
@@ -121,6 +123,7 @@ jobs:
           upterm-version: v0.29.0
           
       - name: 📤 Push config to main branch
+        id: push_config
         run: |
           SRC="/workdir/openwrt/.config"
           DST="$GITHUB_WORKSPACE/${CONFIG_FILE}"
@@ -138,6 +141,8 @@ jobs:
             git pull --rebase origin $CURRENT_BRANCH
             git push -f origin HEAD:$CURRENT_BRANCH
           )
+          # Capture HEAD after the push/rebase, including when the config is unchanged.
+          echo "config_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
   build:
     name: 🔨 Build Firmware
@@ -148,6 +153,9 @@ jobs:
     steps:
       - name: 🙌 Checkout
         uses: actions/checkout@v4
+        with:
+          # Use the config saved in this run; skipped menuconfig keeps the triggering SHA.
+          ref: ${{ needs.menuconfig.outputs.config_sha || github.sha }}
 
       - name: 🪠 Free Disk Space
         uses: jlumbroso/free-disk-space@main

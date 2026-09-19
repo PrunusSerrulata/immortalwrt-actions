@@ -82,6 +82,7 @@ touch "$GITHUB_WORKSPACE/continue"
 ```
 
 SSH 步骤最多运行 15 分钟，请在超时前保存配置并创建 `continue` 文件；直接取消运行或超时会跳过配置推送。
+后续编译会检出本次配置保存并推送后的提交；未启用 SSH 配置时，使用触发工作流的提交。
 如果不显示连接命令，可在 GitHub 的 Re-run jobs 中勾选 Enable debug logging，
 检查 Upterm 启动日志及到 `uptermd.upterm.dev` 的连接情况。
 
