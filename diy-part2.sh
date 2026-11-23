@@ -43,16 +43,6 @@ sed -i -e '/^IMG_PREFIX:=/i BUILD_DATE := $(shell date +%Y%m%d)' \
 
 # BIN_DIR="$GITHUB_WORKSPACE/openwrt/files/usr/bin"
 # mkdir -p "$BIN_DIR"
-# -------- 下载并解压 sing-box ARM64 -------
-# echo "Downloading sing-box..."
-# SINGBOX_VER="1.12.17"
-# curl -L -o sing-box.tar.gz https://github.com/SagerNet/sing-box/releases/download/v${SINGBOX_VER}/sing-box-${SINGBOX_VER}-linux-arm64.tar.gz
-# TMP_DIR=$(mktemp -d)
-# tar -xzf sing-box.tar.gz -C "$TMP_DIR"
-# mv "$TMP_DIR"/sing-box-${SINGBOX_VER}-linux-arm64/sing-box "$BIN_DIR"/sing-box
-# chmod +x "$BIN_DIR/sing-box"
-# rm -rf "$TMP_DIR"
-# rm sing-box.tar.gz
 
 # -------- 下载并解压 easytier ARM64 -------
 # echo "Downloading easytier..."

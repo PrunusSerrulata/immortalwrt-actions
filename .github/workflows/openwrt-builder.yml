@@ -245,6 +245,13 @@ jobs:
             
             # 4. 刷新配置并下载
             make defconfig
+            if singbox_selection=$(grep -E '^CONFIG_PACKAGE_sing-box=[ym]$' .config); then
+              if [ ! -f package/sing-box-stable/release.mk ]; then
+                python3 "$GITHUB_WORKSPACE/scripts/prepare-sing-box.py"
+              fi
+              make defconfig
+              grep -Fxq "$singbox_selection" .config || { echo "sing-box dependency resolution failed" >&2; exit 1; }
+            fi
             make download -j$(nproc)
             
             # 5. 开始编译
@@ -255,6 +262,9 @@ jobs:
             fi
 
             echo "✅ $DEV build finished."
+            if grep -qx 'CONFIG_PACKAGE_sing-box=y' .config; then
+              find bin/targets -name '*.manifest' -exec grep -HE '^(sing-box|luci-app-homeproxy|ca-bundle|firewall4|kmod-(inet-diag|netlink-diag|tun|nft-queue|nft-tproxy)|ucode-mod-digest) - ' {} +
+            fi
             df -hT /workdir
             echo "::endgroup::"
           done
