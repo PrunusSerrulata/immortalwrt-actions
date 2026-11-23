@@ -13,6 +13,14 @@
 # Modify default IP
 sed -i 's/192.168.6.1/192.168.10.1/g' package/base-files/files/bin/config_generate
 
+# Use the upstream HomeProxy checkout with the current firmware's LuCI framework.
+homeproxy_dir="$PWD/upstream/luci-app-homeproxy"
+if [ ! -d "$homeproxy_dir/.git" ]; then
+  git clone --branch master --depth 1 https://github.com/immortalwrt/homeproxy.git "$homeproxy_dir" || exit 1
+fi
+ln -sfnT "$homeproxy_dir" package/feeds/luci/luci-app-homeproxy || exit 1
+git -C "$homeproxy_dir" log -1 --format='HomeProxy upstream: %H (%cs)' || exit 1
+
 # Modify default theme
 #sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 
